@@ -27,7 +27,7 @@ on:
     - cron: '15 13 * * *'   # once a day @ 2:15am UTC (7:15am PST)
 
 env:
-  SCHEME: "PrefsKit-CI"
+  SCHEME: "swift-prefs"
 
 jobs:
   macOS:

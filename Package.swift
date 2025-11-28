@@ -5,31 +5,31 @@ import CompilerPluginSupport
 import PackageDescription
 
 let package = Package(
-    name: "PrefsKit",
+    name: "swift-prefs",
     platforms: [.macOS(.v10_15), .macCatalyst(.v13), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)],
     products: [
-        .library(name: "PrefsKit", targets: ["PrefsKit"]),
-        .library(name: "PrefsKitCore", targets: ["PrefsKitCore"]),
-        .library(name: "PrefsKitUI", targets: ["PrefsKitUI"])
+        .library(name: "SwiftPrefs", targets: ["SwiftPrefs"]),
+        .library(name: "SwiftPrefsCore", targets: ["SwiftPrefsCore"]),
+        .library(name: "SwiftPrefsUI", targets: ["SwiftPrefsUI"])
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "600.0.0" ..< "99999999.999.999")
     ],
     targets: [
         .target(
-            name: "PrefsKit",
-            dependencies: ["PrefsKitCore", "PrefsKitUI"]
+            name: "SwiftPrefs",
+            dependencies: ["SwiftPrefsCore", "SwiftPrefsUI"]
         ),
         .target(
-            name: "PrefsKitCore",
-            dependencies: ["PrefsKitTypes", "PrefsKitMacrosImplementation"]
+            name: "SwiftPrefsCore",
+            dependencies: ["SwiftPrefsTypes", "SwiftPrefsMacrosImplementation"]
         ),
         .target(
-            name: "PrefsKitTypes",
+            name: "SwiftPrefsTypes",
             dependencies: []
         ),
         .macro(
-            name: "PrefsKitMacrosImplementation",
+            name: "SwiftPrefsMacrosImplementation",
             dependencies: [
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
@@ -37,21 +37,21 @@ let package = Package(
             ]
         ),
         .target(
-            name: "PrefsKitUI",
-            dependencies: ["PrefsKitCore"]
+            name: "SwiftPrefsUI",
+            dependencies: ["SwiftPrefsCore"]
         ),
         .testTarget(
-            name: "PrefsKitCoreTests",
+            name: "SwiftPrefsCoreTests",
             dependencies: [
-                "PrefsKitCore",
-                "PrefsKitMacrosImplementation",
+                "SwiftPrefsCore",
+                "SwiftPrefsMacrosImplementation",
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
             ]
         ),
         .testTarget(
-            name: "PrefsKitTypesTests",
-            dependencies: ["PrefsKitTypes"]
+            name: "SwiftPrefsTypesTests",
+            dependencies: ["SwiftPrefsTypes"]
         )
     ]
 )

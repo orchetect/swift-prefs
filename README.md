@@ -1,8 +1,8 @@
-![PrefsKit](Images/prefskit-banner.png)
+![swift-prefs](Images/swiftprefs-banner.png)
 
-# PrefsKit
+# swift-prefs
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FPrefsKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/PrefsKit) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FPrefsKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/PrefsKit) [![Xcode 16](https://img.shields.io/badge/Xcode-16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/PrefsKit/blob/main/LICENSE)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-prefs%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-prefs) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-prefs%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-prefs) [![Xcode 16](https://img.shields.io/badge/Xcode-16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-prefs/blob/main/LICENSE)
 
 A modern Swift library for reading & writing app preferences:
 
@@ -30,7 +30,7 @@ A modern Swift library for reading & writing app preferences:
 
 ## Quick Start
 
-1. Add PrefsKit to your app or package
+1. Add swift-prefs to your app or package
 2. Create a schema that defines the backing storage and preference key/value types.
    - Apply the `@PrefsSchema` attribute to the class.
    - Define your `storage` and `storageMode` using the corresponding `@Storage` and `@StorageMode` attributes.
@@ -38,7 +38,7 @@ A modern Swift library for reading & writing app preferences:
      Value types may be `Optional` or have a default value.
    ```swift
    import Foundation
-   import PrefsKit
+   import SwiftPrefs
    
    @PrefsSchema final class Prefs {
        @Storage var storage = .userDefaults
@@ -384,7 +384,7 @@ Due to Swift macro type system limitations, the base coding strategy must be spe
 
 #### Implementing Custom Coding Strategies
 
-For more advanced coding requirements, PrefsKit supports defining custom *value ←→ storage value* encoding implementations.
+For more advanced coding requirements, the library supports defining custom *value ←→ storage value* encoding implementations.
 
 ```swift
 struct MyType {
@@ -487,9 +487,9 @@ The storage property may be accessed directly using `value(forKey:)` and `setVal
 
 To ensure type safety, mixed value types in arrays (aka `[Any]`) or dictionaries (aka `[String: Any]`) are treated differently in a prefs schema, using the `@RawPref` type declaration.
 
-PrefsKit typically restricts types to safe atomic types to ensure compatibility between different storage backends (UserDefaults, plist, etc.) but these raw types may be used in edge cases where more flexibility is required with less safety.
+The library typically restricts types to safe atomic types to ensure compatibility between different storage backends (UserDefaults, plist, etc.) but these raw types may be used in edge cases where more flexibility is required with less safety.
 
-Raw access to preference keys can be used as an accommodation for migrating from an old prefs storage format to one that is compatible with PrefsKit's `@PrefsSchema`.
+Raw access to preference keys can be used as an accommodation for migrating from an old prefs storage format to one that is compatible with `@PrefsSchema`.
 
 ```swift
 @PrefsSchema final class Prefs {
@@ -515,7 +515,7 @@ Raw access to preference keys can be used as an accommodation for migrating from
 
 All prefs storage backends can import and export from various file and data formats.
 
-PrefsKit ships with support for two serialization formats:
+The library ships with support for two serialization formats:
 
 - plist (property list), which can convert 1:1 with `PrefsStorage` atomic value types
 - JSON, which can convert most value types with `PrefsStorage`, but requires custom implementation for some value types before they can be converted
@@ -656,19 +656,19 @@ let xmlString = try prefs.storage.exportString(format: .plist())
 
 ### Custom Import/Export Formats
 
-PrefsKit offers plist (property list) and JSON import/export formats, but custom formats may be implemented.
+The library offers plist (property list) and JSON import/export formats, but custom formats may be implemented.
 
 - Create an import type conforming to the `PrefsStorageImportFormat` protocol
 - Create an export type conforming to the `PrefsStorageExportFormat` protocol
 
-Formats employ a strategy for processing or converting value types. PrefsKit offers several basic strategies, but custom strategies may be implemented.
+Formats employ a strategy for processing or converting value types. The library offers several basic strategies, but custom strategies may be implemented.
 
 - Create an import strategy type conforming to the `PrefsStorageImportStrategy` protocol
 - Create an export strategy type conforming to the `PrefsStorageExportStrategy` protocol
 
 ## Custom Storage Backend
 
-While PrefsKit offers concrete storage backends that cover the vast majority of use cases (dictionary and UserDefaults), custom backends may be implemented by conforming to the `PrefsStorage` protocol.
+While the library offers concrete storage backends that cover the vast majority of use cases (dictionary and UserDefaults), custom backends may be implemented by conforming to the `PrefsStorage` protocol.
 
 Additionally:
 
@@ -699,11 +699,11 @@ Alternatively, if you do not want the class to be bound to `@MainActor`, actors 
 
 > [!NOTE]
 >
-> This may be subject to change in future versions of PrefsKit.
+> This may be subject to change in future versions of swift-prefs.
 
 ## FAQ
 
-- **Why use PrefsKit?**
+- **Why use swift-prefs?**
 
   Offering users customization points in your software is a foundational way to offer a great user experience — but it's not the main event. You'd rather be putting time and resources into developing the actual features users are customizing than dealing with the overhead of how these options are stored and handled. And so often the problem is handled by way of path of least resistance, which usually goes something like "just use `UserDefaults` and move on" or "`@AppStorage` is good enough, right?"
 
@@ -715,25 +715,46 @@ Alternatively, if you do not want the class to be bound to `@MainActor`, actors 
 
   The 1st-party provided `@AppStorage` property wrapper is convenient and perfectly fine for small apps that do not require robust storage flexibility or prefs isolation / mocking for integration testing or unit testing.
 
-  It also is fairly limited in the value types it supports. PrefsKit offers an easy to use, extensible blueprint for defining and using encoding strategies for any value type.
+  It also is fairly limited in the value types it supports. swift-prefs offers an easy to use, extensible blueprint for defining and using encoding strategies for any value type.
 
 - **Why not just use SwiftData?**
 
   SwiftData is more oriented towards data models and user document content. It requires some adaptation and boilerplate to shoehorn it into the role of application preferences storage. It also has a somewhat steep learning curve and may contain more features than are necessary.
 
-  PrefsKit is purpose-built for preference storage.
+  swift-prefs is purpose-built for preference storage.
 
 - **Why not just use `UserDefaults` directly?**
 
   For small apps this approach may be adequate. However it forms tight coupling to `UserDefaults` as a storage backend. This means automated integration testing can't as easily be performed with isolated/mocked preferences. Even if the approach of using separate `UserDefaults` suites for testing is employed, the coupling makes changing storage backend in the future more time-intensive.
 
-  PrefsKit adds the ability to swap out the storage backend at any time in the future, in addition to its easy to use, extensible blueprints for defining and using encoding strategies for value types.
+  swift-prefs adds the ability to swap out the storage backend at any time in the future, in addition to its easy to use, extensible blueprints for defining and using encoding strategies for value types.
 
-## Swift Package Manager (SPM)
+## Installation
 
-Add the package to your project or Swift package using `https://github.com/orchetect/PrefsKit` as the URL.
+### Swift Package Manager (SPM)
 
-Note that PrefsKit makes use of [Swift Macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/) and because of this, Xcode will prompt you to allow macros for this package. It will ask again any time a new release of the package is available and you update to it.
+To add this package to an Xcode app project, use:
+
+ `https://github.com/orchetect/swift-prefs` as the URL.
+
+To add this package to a Swift package, add the dependency to your package and target in Package.swift:
+
+```swift
+let package = Package(
+    dependencies: [
+        .package(url: "https://github.com/orchetect/swift-prefs", from: "2.0.0")
+    ],
+    targets: [
+        .target(
+            dependencies: [
+                .product(name: "SwiftPrefs", package: "swift-prefs")
+            ]
+        )
+    ]
+)
+```
+
+Note that the library makes use of [Swift Macros](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/) and because of this, Xcode will prompt you to allow macros for this package. It will ask again any time a new release of the package is available and you update to it.
 
 ## Author
 
@@ -741,15 +762,19 @@ Coded by a bunch of 🐹 hamsters in a trench coat that calls itself [@orchetect
 
 ## License
 
-Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/PrefsKit/blob/master/LICENSE) for details.
+Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift-prefs/blob/master/LICENSE) for details.
 
 ## Community & Support
 
 Please do not email maintainers for technical support. Several options are available for issues and questions:
 
-- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/PrefsKit/discussions).
-- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/PrefsKit/issues).
+- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/swift-prefs/discussions).
+- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/swift-prefs/issues).
 
 ## Contributions
 
-Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/PrefsKit/discussions) first prior to new submitting PRs for features or modifications is encouraged.
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/swift-prefs/discussions) first prior to new submitting PRs for features or modifications is encouraged.
+
+## Legacy
+
+This repository was formerly known as PrefsKit.

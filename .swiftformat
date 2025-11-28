@@ -23,7 +23,7 @@
 --funcattributes prev-line
 --groupedextension "MARK: %c"
 --guardelse auto
---header "\n {file}\n PrefsKit • https://github.com/orchetect/PrefsKit\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--header "\n {file}\n swift-prefs • https://github.com/orchetect/swift-prefs\n © {year} Steffan Andrews • Licensed under MIT License\n"
 --hexgrouping 8,8
 --hexliteralcase uppercase
 --ifdef no-indent
