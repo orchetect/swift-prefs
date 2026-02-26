@@ -30,7 +30,8 @@ A modern Swift library for reading & writing app preferences:
 
 ## Quick Start
 
-1. Add swift-prefs to your app or package
+1. Add **swift-prefs** as a dependency to your app project or package.
+
 2. Create a schema that defines the backing storage and preference key/value types.
    - Apply the `@PrefsSchema` attribute to the class.
    - Define your `storage` and `storageMode` using the corresponding `@Storage` and `@StorageMode` attributes.
@@ -54,34 +55,67 @@ A modern Swift library for reading & writing app preferences:
 > [!TIP]
 >
 > For a list of available storage value types, see [Storage Value Types](#Storage-Value-Types).
-3. Instantiate the class in the appropriate scope. If you are defining application preferences, the `App` struct is a good place to store it. It may be passed into the environment so that any subview can access it.
-   ```swift
-   struct MyApp: App {
-       @State private var prefs = Prefs()
-       
-       var body: some Scene {
-           WindowGroup {
-               ContentView()
-                   .environment(prefs)
-           }
-       }
-   }
-   ```
-4. The class is implicitly `@Observable` so its properties can trigger SwiftUI view updates and be used as bindings.
-   ```swift
-   struct ContentView: View {
-       @Environment(Prefs.self) private var prefs
-       
-       var body: some View {
-           Text("String: \(prefs.foo ?? "Not yet set.")")
-           Text("Int: \(prefs.bar)")
-           
-           @Bindable var prefs = prefs
-           Toggle("State", isOn: $prefs.bool)
-       }
-   }
-   ```
 
+3. Instantiate the class in the appropriate scope.
+
+   - When using **dependency injection**, the `App` struct is a good place to store it. It may be passed into the environment so that any subview can access it.
+
+     ```swift
+     struct MyApp: App {
+         @State private var prefs = Prefs()
+         
+         var body: some Scene {
+             WindowGroup {
+                 ContentView()
+                     .environment(prefs)
+             }
+         }
+     }
+     ```
+
+     The class is implicitly `@Observable` so its properties can trigger SwiftUI view updates and be used as bindings.
+
+     ```swift
+     struct ContentView: View {
+         @Environment(Prefs.self) private var prefs
+         
+         var body: some View {
+             @Bindable var prefs = prefs
+             
+             Text("String: \(prefs.foo ?? "Not yet set.")")
+             Text("Int: \(prefs.bar)")      
+             Toggle("State", isOn: $prefs.bool)
+         }
+     }
+     ```
+
+   - For **global singleton** use instead, make the initializer private and declare a static shared property.
+   
+     (In this case, the instance does not need to be stored in the `App` struct and it does not need to be passed through the SwiftUI environment.)
+   
+     ```swift
+     @PrefsSchema final class Prefs {
+         // ...
+         
+         static let shared = Prefs()
+         fileprivate init() { }
+     }
+     ```
+   
+     The class is implicitly `@Observable` so its properties can trigger SwiftUI view updates and be used as bindings.
+   
+     ```swift
+     struct ContentView: View {
+         var body: some View {
+             @Bindable var prefs = Prefs.shared
+             
+             Text("String: \(prefs.foo ?? "Not yet set.")")
+             Text("Int: \(prefs.bar)")
+             Toggle("State", isOn: $prefs.bool)
+         }
+     }
+     ```
+   
 ## Documentation
 
 ### Storage Value Types
