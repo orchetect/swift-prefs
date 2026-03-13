@@ -80,6 +80,8 @@ jobs:
           -IDEPackageEnablePrebuilts=NO
         )
         xcodebuild build "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+    - name: Delete Derived Data
+      run: rm -rf ~/Library/Developer/Xcode/DerivedData
     - name: Unit Tests
       run: |
         # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
@@ -129,6 +131,8 @@ jobs:
       env:
         PLATFORMSHORT: ${{ steps.sim-setup.outputs.platform-short }}
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
+    - name: Delete Derived Data
+      run: rm -rf ~/Library/Developer/Xcode/DerivedData
     - name: Unit Tests
       run: |
         # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
