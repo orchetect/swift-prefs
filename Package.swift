@@ -44,9 +44,9 @@ let package = Package(
             name: "SwiftPrefsCoreTests",
             dependencies: [
                 "SwiftPrefsCore",
-                "SwiftPrefsMacrosImplementation",
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+                .target(name: "SwiftPrefsMacrosImplementation", condition: .when(platforms: [.macOS])),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax", condition: .when(platforms: [.macOS])),
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax", condition: .when(platforms: [.macOS]))
             ]
         ),
         .testTarget(
