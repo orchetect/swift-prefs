@@ -4,18 +4,18 @@
 //  © 2025 Steffan Andrews • Licensed under MIT License
 //
 
+// MARK: - Macro Implementation Testing
+
+// swiftformat:disable indent
+
+#if canImport(SwiftPrefsMacrosImplementation) && os(macOS)
+
 import SwiftPrefsCore
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
-
-// MARK: - Macro Implementation Testing
-
-// swiftformat:disable indent
-
-#if canImport(SwiftPrefsMacrosImplementation)
 
 @testable import SwiftPrefsMacrosImplementation
 
