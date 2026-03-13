@@ -27,8 +27,8 @@ on:
     - cron: '15 13 * * *'   # once a day @ 2:15am UTC (7:15am PST)
 
 env:
-  SCHEME: "swift-prefs"
-  WORKSPACEPATH: ".swiftpm/xcode/package.xcworkspace"
+  SCHEME: swift-prefs
+  WORKSPACEPATH: .swiftpm/xcode/package.xcworkspace
 
 jobs:
   macOS:
@@ -41,9 +41,23 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "generic/platform=macOS"
+        )
+        xcodebuild build "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
-      run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "platform=macOS"
+        )
+        xcodebuild test "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
   
   macCatalyst:
     name: Tests (macCatalyst)
@@ -55,9 +69,29 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
+        # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "generic/platform=macOS,variant=Mac Catalyst"
+          -IDEPackageEnablePrebuilts=NO
+        )
+        xcodebuild build "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
-      run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
+        # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "platform=macOS,variant=Mac Catalyst"
+          -IDEPackageEnablePrebuilts=NO
+        )
+        xcodebuild test "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   device-simulators:
     name: Tests
@@ -81,12 +115,32 @@ jobs:
         scheme: ${{ env.SCHEME }}
         target: ${{ matrix.target }}
     - name: Build
-      run: xcodebuild build -skipMacroValidation -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "generic/platform=$PLATFORMSHORT" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
+        # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "generic/platform=$PLATFORMSHORT"
+          -IDEPackageEnablePrebuilts=NO
+        )
+        xcodebuild build "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       env:
         PLATFORMSHORT: ${{ steps.sim-setup.outputs.platform-short }}
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
     - name: Unit Tests
-      run: xcodebuild test -skipMacroValidation -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=$PLATFORM,id=$ID" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: |
+        # As a workaround for flakey pre-builds included in SwiftSyntax, we have to disable them when testing any platform that isn't macOS
+        # See: https://github.com/swiftlang/swift-syntax/issues/2421#issuecomment-3542406416
+        PARAMS=(
+          -skipMacroValidation
+          -workspace "$WORKSPACEPATH"
+          -scheme "$SCHEME"
+          -destination "platform=$PLATFORM,id=$ID"
+          -IDEPackageEnablePrebuilts=NO
+        )
+        xcodebuild test "${PARAMS[@]}" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       env:
         ID: ${{ steps.sim-setup.outputs.id }}
         PLATFORM: ${{ steps.sim-setup.outputs.platform }}
