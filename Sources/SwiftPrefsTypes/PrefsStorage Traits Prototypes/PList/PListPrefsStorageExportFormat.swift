@@ -1,7 +1,7 @@
 //
 //  PListPrefsStorageExportFormat.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import Foundation
 public struct PListPrefsStorageExportFormat: PrefsStorageExportFormat {
     public var format: PropertyListSerialization.PropertyListFormat
     public var strategy: any PrefsStorageExportStrategy
-    
+
     public init(
         format: PropertyListSerialization.PropertyListFormat,
         strategy: some PrefsStorageExportStrategy

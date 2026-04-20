@@ -1,7 +1,7 @@
 //
 //  ISO8601StringDatePrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -25,11 +25,11 @@ import Foundation
 /// > `@JSONDataCodablePref` or `@JSONStringCodablePref`.
 public struct ISO8601DateStringPrefsCoding: PrefsCodable {
     public init() { }
-    
+
     public func encode(prefsValue: Date) -> String? {
         ISO8601DateFormatter().string(from: prefsValue)
     }
-    
+
     public func decode(prefsValue: String) -> Date? {
         ISO8601DateFormatter().date(from: prefsValue)
     }

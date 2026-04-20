@@ -1,18 +1,18 @@
 //
 //  PrefsStorageModeWrapper.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 /// Pref schema property access storage mode.
 @propertyWrapper
 public struct PrefsStorageModeWrapper {
     public var wrappedValue: PrefsStorageMode
-    
+
     public init(wrappedValue: PrefsStorageMode) {
         self.wrappedValue = wrappedValue
     }
-    
+
     public init(_ mode: PrefsStorageMode) {
         wrappedValue = mode
     }

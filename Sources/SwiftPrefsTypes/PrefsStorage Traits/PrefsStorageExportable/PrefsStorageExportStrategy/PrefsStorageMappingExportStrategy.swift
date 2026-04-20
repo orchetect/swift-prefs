@@ -1,7 +1,7 @@
 //
 //  PrefsStorageMappingExportStrategy.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -24,23 +24,23 @@ extension PrefsStorageExportStrategy where Self: PrefsStorageMappingExportStrate
         // start recursive call at root
         try prepareForExport(keyPath: [], dict: storage)
     }
-    
+
     func prepareForExport(keyPath: [String], dict: [String: Any]) throws -> [String: Any] {
         var copy = dict
-        
+
         for (key, value) in copy {
             var keyPath = keyPath
             keyPath.append(key)
             copy[key] = try prepareForExport(keyPath: keyPath, element: value)
         }
-        
+
         return copy
     }
-    
+
     func prepareForExport(keyPath: [String], array: [Any]) throws -> Any {
         try array.map { try prepareForExport(keyPath: keyPath, element: $0) }
     }
-    
+
     func prepareForExport(keyPath: [String], element: Any) throws -> Any {
         switch element {
         case let v as String:
@@ -69,7 +69,7 @@ extension PrefsStorageExportStrategy where Self: PrefsStorageMappingExportStrate
             element
         }
     }
-    
+
     func prepareForExport(
         keyPath: [String],
         number: NSNumber,

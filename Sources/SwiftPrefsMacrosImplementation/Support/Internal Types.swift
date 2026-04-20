@@ -1,7 +1,7 @@
 //
 //  Internal Types.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,14 +11,14 @@ import SwiftSyntaxMacros
 enum TypeBinding {
     case nonOptional(TypeSyntax)
     case optional(TypeSyntax)
-    
+
     var isOptional: Bool {
         switch self {
         case .nonOptional: false
         case .optional: true
         }
     }
-    
+
     var description: String {
         switch self {
         case let .nonOptional(typeSyntax):
@@ -36,7 +36,7 @@ struct TypeBindingInfo {
     let keyAndCodingStructDeclaration: String
     let privateKeyVarDeclaration: String
     let privateValueVarDeclaration: String
-    
+
     init(
         for macro: PrefMacro.Type,
         from declaration: some DeclSyntaxProtocol,
@@ -56,7 +56,7 @@ struct TypeBindingInfo {
             privateValueVarName: privateValueVarName
         )
     }
-    
+
     init(
         for macro: PrefMacro.Type,
         from varDec: VariableDeclSyntax,
@@ -67,9 +67,9 @@ struct TypeBindingInfo {
     ) throws {
         let typeBinding = try PrefMacroUtils.typeBinding(from: varDec)
         typeName = typeBinding.description
-        
+
         let useCustomCodingDecl = macro.hasCustomCoding || macro.hasInlineCoding
-        
+
         isOptional = typeBinding.isOptional
         if isOptional {
             // must not have a default value

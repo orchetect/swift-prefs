@@ -1,7 +1,7 @@
 //
 //  PrefsStorageImportable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -22,7 +22,7 @@ public protocol PrefsStorageImportable where Self: PrefsStorage {
         from contents: [String: any PrefsStorageValue],
         by behavior: PrefsStorageUpdateStrategy
     ) throws -> Set<String>
-    
+
     /// Load key/values into storage.
     ///
     /// - Returns: Key names for key/value pairs that were imported.
@@ -31,67 +31,67 @@ public protocol PrefsStorageImportable where Self: PrefsStorage {
         unsafe contents: [String: Any],
         by behavior: PrefsStorageUpdateStrategy
     ) throws -> Set<String>
-    
+
     /// Import storage contents from a file on disk.
     ///
     /// - Returns: Key names for key/value pairs that were imported.
     @discardableResult
-    func load<Format: PrefsStorageImportFormat>(
+    func load(
         from file: URL,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatFileImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatFileImportable
-    
+    ) throws -> Set<String>
+
     /// Import storage contents from a format's raw data.
     ///
     /// - Returns: Key names for key/value pairs that were imported.
     @discardableResult
-    func load<Format: PrefsStorageImportFormat>(
+    func load(
         from data: Data,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatDataImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatDataImportable
-    
+    ) throws -> Set<String>
+
     /// Import storage contents from a format that supports string encoding/markup.
     ///
     /// - Returns: Key names for key/value pairs that were imported.
     @discardableResult
-    func load<Format: PrefsStorageImportFormat>(
+    func load(
         from string: String,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatStringImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatStringImportable
+    ) throws -> Set<String>
 }
 
 // MARK: - Default Implementation
 
 extension PrefsStorage where Self: PrefsStorageImportable {
     @discardableResult
-    public func load<Format: PrefsStorageImportFormat>(
+    public func load(
         from file: URL,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatFileImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatFileImportable {
+    ) throws -> Set<String> {
         let loaded = try format.load(from: file)
         return try load(unsafe: loaded, by: behavior)
     }
-    
+
     @discardableResult
-    public func load<Format: PrefsStorageImportFormat>(
+    public func load(
         from data: Data,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatDataImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatDataImportable {
+    ) throws -> Set<String> {
         let loaded = try format.load(from: data)
         return try load(unsafe: loaded, by: behavior)
     }
-    
+
     @discardableResult
-    public func load<Format: PrefsStorageImportFormat>(
+    public func load(
         from string: String,
-        format: Format,
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatStringImportable,
         by behavior: PrefsStorageUpdateStrategy
-    ) throws -> Set<String> where Format: PrefsStorageImportFormatStringImportable {
+    ) throws -> Set<String> {
         let loaded = try format.load(from: string)
         return try load(unsafe: loaded, by: behavior)
     }

@@ -1,7 +1,7 @@
 //
 //  PrefMacroError.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -20,7 +20,7 @@ public enum PrefMacroError: LocalizedError {
     case modifiersNotAllowed
     case noDefaultValueAllowed
     case tooManyArguments
-    
+
     public var errorDescription: String? {
         switch self {
         case .missingKeyArgument:
@@ -54,5 +54,7 @@ public enum PrefMacroError: LocalizedError {
 }
 
 extension PrefMacroError: CustomStringConvertible {
-    public var description: String { errorDescription ?? localizedDescription }
+    public var description: String {
+        errorDescription ?? localizedDescription
+    }
 }

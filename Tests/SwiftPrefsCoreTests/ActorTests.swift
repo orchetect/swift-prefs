@@ -1,7 +1,7 @@
 //
 //  ActorTests.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,19 +12,20 @@ import Testing
 @Suite
 struct MainActorMemberTests {
     @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
-    @PrefsSchema final class TestSchema: @unchecked Sendable {
+    @PrefsSchema
+    final class TestSchema: @unchecked Sendable {
         @Storage var storage = .dictionary
         @StorageMode var storageMode = .cachedReadStorageWrite
-        
+
         @MainActor @Pref var foo: Int? // <-- can attach to individual properties
         @Pref var bar: String?
     }
-    
+
     @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
     @Test
     func baseline() {
         let prefs = TestSchema()
-        
+
         Task { @MainActor in prefs.foo = 1 } // <-- needs MainActor context
         prefs.bar = "a string"
     }
@@ -36,19 +37,20 @@ struct MainActorMemberTests {
 @Suite
 struct MainActorBoundTests {
     @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
-    @MainActor @PrefsSchema public final class TestSchema {
+    @MainActor @PrefsSchema
+    final class TestSchema {
         @Storage var storage = .dictionary
         @StorageMode var storageMode = .cachedReadStorageWrite
-        
+
         @Pref var foo: Int?
         @Pref var bar: String?
     }
-    
+
     @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
     @MainActor @Test
     func mainActor() {
         let prefs = TestSchema()
-        
+
         prefs.foo = 1
     }
 }

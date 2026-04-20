@@ -1,7 +1,7 @@
 //
 //  Base64StringDataPrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,12 +10,12 @@ import Foundation
 public struct Base64StringDataPrefsCoding: PrefsCodable {
     public let encodingOptions: Data.Base64EncodingOptions
     public let decodingOptions: Data.Base64DecodingOptions
-    
+
     public init(encodingOptions: Data.Base64EncodingOptions, decodingOptions: Data.Base64DecodingOptions) {
         self.encodingOptions = encodingOptions
         self.decodingOptions = decodingOptions
     }
-    
+
     public func encode(prefsValue: Data) -> String? {
         prefsValue.base64EncodedString(options: encodingOptions)
     }

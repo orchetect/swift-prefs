@@ -1,7 +1,7 @@
 //
 //  MacroTests.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 // MARK: - Macro Implementation Testing
@@ -11,19 +11,18 @@
 #if canImport(SwiftPrefsMacrosImplementation) && os(macOS)
 
 import SwiftPrefsCore
+@testable import SwiftPrefsMacrosImplementation
 import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
 
-@testable import SwiftPrefsMacrosImplementation
-
 final class PrefsSchemaMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "PrefsSchema": PrefsSchemaMacro.self
     ]
-    
+
     func testPrefsSchemaMacro() {
         assertMacroExpansion(
             """
@@ -34,20 +33,20 @@ final class PrefsSchemaMacroTests: XCTestCase {
             expandedSource: """
             final class Foo {
                 var foo: Int?
-            
+
                 @ObservationIgnored private let _$observationRegistrar = Observation.ObservationRegistrar()
             }
-            
+
             extension Foo: PrefsSchema {
             }
-            
+
             extension Foo: Observable {
                 internal nonisolated func access<Member>(
                     keyPath: KeyPath<Foo, Member>
                 ) {
                     _$observationRegistrar.access(self, keyPath: keyPath)
                 }
-            
+
                 internal nonisolated func withMutation<Member, MutationResult>(
                     keyPath: KeyPath<Foo, Member>,
                     _ mutation: () throws -> MutationResult
@@ -65,7 +64,7 @@ final class AtomicPrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "Pref": AtomicPrefMacro.self
     ]
-    
+
     func testPrefMacro_KeyArgument_Optional() {
         assertMacroExpansion(
             """
@@ -113,15 +112,15 @@ final class AtomicPrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_foo = SwiftPrefsTypes.AnyAtomicPrefsKey<Int>(key: "someInt")
-            
+
             private var __PrefValue_foo: Int?
             """,
             macros: testMacros
         )
     }
-    
+
     func testPrefMacro_NoKeyArgument_Optional() {
         assertMacroExpansion(
             """
@@ -169,15 +168,15 @@ final class AtomicPrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_foo = SwiftPrefsTypes.AnyAtomicPrefsKey<Int>(key: "foo")
-            
+
             private var __PrefValue_foo: Int?
             """,
             macros: testMacros
         )
     }
-    
+
     func testPrefMacro_KeyArgument_DefaultValue() {
         assertMacroExpansion(
             """
@@ -225,15 +224,15 @@ final class AtomicPrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_bar = SwiftPrefsTypes.AnyDefaultedAtomicPrefsKey<String>(key: KeyName.bar, defaultValue: "baz")
-            
+
             private var __PrefValue_bar: String?
             """,
             macros: testMacros
         )
     }
-    
+
     func testPrefMacro_NoKeyArgument_DefaultValue() {
         assertMacroExpansion(
             """
@@ -281,9 +280,9 @@ final class AtomicPrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_bar = SwiftPrefsTypes.AnyDefaultedAtomicPrefsKey<String>(key: "bar", defaultValue: "baz")
-            
+
             private var __PrefValue_bar: String?
             """,
             macros: testMacros
@@ -295,7 +294,7 @@ final class CodingPrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "Pref": CodingPrefMacro.self
     ]
-    
+
     // TODO: Add unit tests
 }
 
@@ -303,7 +302,7 @@ final class InlinePrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "Pref": InlinePrefMacro.self
     ]
-    
+
     func testPrefMacro_KeyArgument_DefaultValue() {
         assertMacroExpansion(
             """
@@ -351,19 +350,19 @@ final class InlinePrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_bar = SwiftPrefsTypes.AnyDefaultedPrefsKey(key: KeyName.bar, defaultValue: .foo, coding: SwiftPrefsTypes.PrefsCoding(encode: {
                         MyType(rawValue: $0)
                     }, decode: {
                         $0.rawValue
                     }))
-            
+
             private var __PrefValue_bar: MyType?
             """,
             macros: testMacros
         )
     }
-    
+
     func testPrefMacro_NoKeyArgument_DefaultValue() {
         assertMacroExpansion(
             """
@@ -411,13 +410,13 @@ final class InlinePrefMacroTests: XCTestCase {
                     }
                 }
             }
-            
+
             private let __PrefCoding_bar = SwiftPrefsTypes.AnyDefaultedPrefsKey(key: "bar", defaultValue: "baz", coding: SwiftPrefsTypes.PrefsCoding(encode: {
                         MyType(rawValue: $0)
                     }, decode: {
                         $0.rawValue
                     }))
-            
+
             private var __PrefValue_bar: String?
             """,
             macros: testMacros
@@ -429,7 +428,7 @@ final class RawRepresentablePrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "RawRepresentablePref": RawRepresentablePrefMacro.self
     ]
-    
+
     // TODO: Add unit tests
 }
 
@@ -437,7 +436,7 @@ final class JSONDataCodablePrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "JSONDataCodablePref": JSONDataCodablePrefMacro.self
     ]
-    
+
     // TODO: Add unit tests
 }
 
@@ -445,7 +444,7 @@ final class JSONStringCodablePrefMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [
         "JSONStringCodablePref": JSONStringCodablePrefMacro.self
     ]
-    
+
     // TODO: Add unit tests
 }
 

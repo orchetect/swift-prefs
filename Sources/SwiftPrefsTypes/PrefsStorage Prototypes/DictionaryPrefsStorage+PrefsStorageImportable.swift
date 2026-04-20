@@ -1,7 +1,7 @@
 //
 //  DictionaryPrefsStorage+PrefsStorageImportable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -23,7 +23,7 @@ extension DictionaryPrefsStorage: PrefsStorageImportable {
             return try load(contents: contents, updatingWithPredicate: predicate)
         }
     }
-    
+
     @discardableResult
     public func load(
         unsafe contents: [String: Any],
@@ -50,7 +50,7 @@ extension DictionaryPrefsStorage {
         updatingWithPredicate predicate: PrefsStorageUpdateStrategy.UpdatePredicate
     ) throws -> Set<String> {
         var updatedKeys: Set<String> = []
-        
+
         for (key, newValue) in contents {
             if let existingValue = storage[key] {
                 let result = try predicate(key, existingValue, newValue)

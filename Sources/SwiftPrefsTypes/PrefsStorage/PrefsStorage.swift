@@ -1,7 +1,7 @@
 //
 //  PrefsStorage.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,12 +10,12 @@ import Foundation
 /// The type must be a reference type (class).
 public protocol PrefsStorage: AnyObject where Self: Sendable {
     // MARK: - Set
-    
-    func setStorageValue<StorageValue: PrefsStorageValue>(forKey key: String, to value: StorageValue?)
+
+    func setStorageValue(forKey key: String, to value: (some PrefsStorageValue)?)
     func setUnsafeStorageValue(forKey key: String, to value: Any?)
-    
+
     // MARK: - Get
-    
+
     func storageValue(forKey key: String) -> Int?
     func storageValue(forKey key: String) -> String?
     func storageValue(forKey key: String) -> Bool?

@@ -1,7 +1,7 @@
 //
 //  JSONPrefsStorageExportFormat.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import Foundation
 public struct JSONPrefsStorageExportFormat: PrefsStorageExportFormat {
     public var options: JSONSerialization.WritingOptions
     public var strategy: any PrefsStorageExportStrategy
-    
+
     public init(
         options: JSONSerialization.WritingOptions = [],
         strategy: any PrefsStorageExportStrategy

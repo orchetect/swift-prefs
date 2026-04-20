@@ -1,7 +1,7 @@
 //
 //  PrefsStorageTypedImportStrategy.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,7 +9,7 @@ import Foundation
 /// Offers default ``PrefsStorageMappingImportStrategy`` implementation functionality.
 public struct PrefsStorageTypedImportStrategy {
     public var typeEraseAmbiguousFloatingPoint: Bool
-    
+
     public init(typeEraseAmbiguousFloatingPoint: Bool = false) {
         self.typeEraseAmbiguousFloatingPoint = typeEraseAmbiguousFloatingPoint
     }

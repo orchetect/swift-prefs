@@ -1,7 +1,7 @@
 //
 //  NSNumber.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -47,13 +47,13 @@ extension NSNumber {
         case classObject = "#" // A class object (Class)
         case methodSelector = ":" // A method selector (SEL)
         case unknown
-        
+
         init(value: NSNumber) {
             let objCTypeString = value.objCTypeString
             self = Self(rawValue: objCTypeString) ?? .unknown
         }
     }
-    
+
     package var typeEncoding: TypeEncoding {
         TypeEncoding(value: self)
     }
@@ -70,17 +70,17 @@ extension NSNumber {
         case double
         case float
         case unknown
-        
+
         init(value: NSNumber) {
             let objCTypeString = value.objCTypeString
             self.init(objCType: objCTypeString)
         }
-        
+
         init(objCType: String) {
             let typeEncoding = TypeEncoding(rawValue: objCType) ?? .unknown
             self.init(typeEncoding: typeEncoding)
         }
-        
+
         init(typeEncoding: TypeEncoding) {
             // Swift Type  Encoding When Cast to NSNumber
             // ----------  ------------------------------
@@ -101,7 +101,7 @@ extension NSNumber {
             // Float                      f
             //
             // Bool        c
-            
+
             self = switch typeEncoding {
             case .char: // "c"
                 .int8_bool
@@ -118,7 +118,7 @@ extension NSNumber {
             }
         }
     }
-    
+
     package var potentialNumberType: SwiftNumberType {
         SwiftNumberType(value: self)
     }

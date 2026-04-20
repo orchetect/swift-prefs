@@ -1,7 +1,7 @@
 //
 //  SystemSettings Panel.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 extension SystemSettings {
@@ -20,17 +20,17 @@ extension SystemSettings {
         case digitalHubCDsAndDVDs
         case displays
         case dock
-        
+
         @available(*, deprecated, message: "Has no effect on macOS 15.")
         case energySaver
-        
+
         @available(*, deprecated, message: "Has no effect on macOS 15.")
         case energySaverPref
-        
+
         /// Mission Control (aka Exposé).
         @available(*, deprecated, message: "Panel missing on newer macOS versions.")
         case missionControlOrLegacyExpose
-        
+
         case extensions
         case familySharing
         case internetAccounts
@@ -39,10 +39,10 @@ extension SystemSettings {
         case mouse
         case network
         case notifications
-        
+
         @available(*, deprecated, message: "Has no effect on macOS 15. Run Passwords.app instead.")
         case passwords
-        
+
         case printAndFax
         case printAndScan
         case profiles
@@ -59,7 +59,7 @@ extension SystemSettings {
         case trackpad
         case accessibility(_ section: SystemSettings.AccessibilityPanel? = nil)
         case wallet
-        
+
         /// Name of bundle located within `/System/Library/PreferencePanes`.
         public var bundleName: String {
             switch self {
@@ -105,7 +105,7 @@ extension SystemSettings {
             case .wallet: "Wallet.prefPane"
             }
         }
-        
+
         public var bundleID: String? {
             switch self {
             case .usersAndGroups: nil
@@ -168,7 +168,7 @@ extension SystemSettings {
         case mouseAndTrackpad
         case switchControl
         case dictation
-        
+
         /// Accessibility panel section identifier.
         ///
         /// Example usage: `com.apple.preference.universalaccess?Seeing_Zoom`
@@ -212,7 +212,7 @@ extension SystemSettings {
         case inputMonitoring
         case filesAndFolders
         case screenRecording
-        
+
         /// Privacy panel section identifier.
         ///
         /// Example usage: `com.apple.preference.security?General`
@@ -254,7 +254,7 @@ extension SystemSettings {
         case remoteAppleEvents
         case internetSharing
         case bluetoothSharing
-        
+
         /// Sharing panel section identifier.
         ///
         /// Example usage: `com.apple.preference.sharing?Internet`

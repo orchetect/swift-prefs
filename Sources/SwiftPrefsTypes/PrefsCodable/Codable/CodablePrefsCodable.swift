@@ -1,7 +1,7 @@
 //
 //  CodablePrefsCodable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Combine
@@ -20,10 +20,10 @@ public protocol CodablePrefsCodable<Encoder, Decoder>: PrefsCodable
 {
     associatedtype Encoder: TopLevelEncoder
     associatedtype Decoder: TopLevelDecoder
-    
+
     /// Return a new instance of the encoder used to encode the type for prefs storage.
     func prefsEncoder() -> Encoder
-    
+
     /// Return a new instance of the decoder used to decode the type from prefs storage.
     func prefsDecoder() -> Decoder
 }
@@ -34,7 +34,7 @@ extension CodablePrefsCodable where StorageValue == Encoder.Output, Encoder.Outp
         guard let value = try? decoder.decode(Value.self, from: prefsValue) else { return nil }
         return value
     }
-    
+
     public func encode(prefsValue: Value) -> StorageValue? {
         let encoder = prefsEncoder()
         guard let encoded = try? encoder.encode(prefsValue) else { return nil }

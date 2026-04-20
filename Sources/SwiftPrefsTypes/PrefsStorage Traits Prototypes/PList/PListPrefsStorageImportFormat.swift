@@ -1,7 +1,7 @@
 //
 //  PListPrefsStorageImportFormat.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,7 +9,7 @@ import Foundation
 /// Prefs storage import format to import plist (property list) contents.
 public struct PListPrefsStorageImportFormat: PrefsStorageImportFormat {
     public var strategy: any PrefsStorageImportStrategy
-    
+
     public init(
         strategy: any PrefsStorageImportStrategy
     ) {

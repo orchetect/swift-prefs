@@ -1,7 +1,7 @@
 //
 //  CodablePrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Combine
@@ -10,11 +10,15 @@ import Foundation
 /// A generic prefs value coding strategy that allows the encoding and decoding logic for a `Codable` type to be
 /// conveniently supplied as closures, alleviating the need to create a new ``CodablePrefsCodable``-conforming type for
 /// basic coding logic.
-public struct CodablePrefsCoding<Value, StorageValue, Encoder, Decoder>: CodablePrefsCodable
-    where Value: Codable, Value: Sendable,
-    StorageValue: PrefsStorageValue, StorageValue == Encoder.Output,
-    Encoder: TopLevelEncoder, Encoder: Sendable, Encoder.Output: PrefsStorageValue,
-    Decoder: TopLevelDecoder, Decoder: Sendable, Decoder.Input: PrefsStorageValue,
+public struct CodablePrefsCoding<
+    Value: Codable & Sendable,
+    StorageValue: PrefsStorageValue,
+    Encoder: TopLevelEncoder & Sendable,
+    Decoder: TopLevelDecoder & Sendable
+>: CodablePrefsCodable
+    where StorageValue == Encoder.Output,
+    Encoder.Output: PrefsStorageValue,
+    Decoder.Input: PrefsStorageValue,
     Encoder.Output == Decoder.Input
 {
     public typealias Value = Value
@@ -23,7 +27,7 @@ public struct CodablePrefsCoding<Value, StorageValue, Encoder, Decoder>: Codable
     public typealias Decoder = Decoder
     let encoder: Encoder
     let decoder: Decoder
-    
+
     public init(
         value: Value.Type,
         storageValue: StorageValue.Type,
@@ -33,7 +37,12 @@ public struct CodablePrefsCoding<Value, StorageValue, Encoder, Decoder>: Codable
         self.encoder = encoder()
         self.decoder = decoder()
     }
-    
-    public func prefsEncoder() -> Encoder { encoder }
-    public func prefsDecoder() -> Decoder { decoder }
+
+    public func prefsEncoder() -> Encoder {
+        encoder
+    }
+
+    public func prefsDecoder() -> Decoder {
+        decoder
+    }
 }

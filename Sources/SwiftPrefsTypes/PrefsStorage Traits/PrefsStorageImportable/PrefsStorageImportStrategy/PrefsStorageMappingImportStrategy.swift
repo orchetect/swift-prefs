@@ -1,7 +1,7 @@
 //
 //  PrefsStorageMappingImportStrategy.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -17,7 +17,7 @@ public protocol PrefsStorageMappingImportStrategy: PrefsStorageImportStrategy {
     /// > This property has no effect if the default implementation of
     /// > `func importValue(forKeyPath: [String], value: NSNumber)` is overridden.
     var typeEraseAmbiguousFloatingPoint: Bool { get set }
-    
+
     func importValue(forKeyPath keyPath: [String], value: Int) throws -> any PrefsStorageValue
     func importValue(forKeyPath keyPath: [String], value: String) throws -> any PrefsStorageValue
     func importValue(forKeyPath keyPath: [String], value: Bool) throws -> any PrefsStorageValue
@@ -34,31 +34,31 @@ extension PrefsStorageMappingImportStrategy {
     public func importValue(forKeyPath keyPath: [String], value: Int) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: String) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: Bool) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: Double) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: Float) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: NSNumber) throws -> any PrefsStorageValue {
         convert(value, typeEraseFloatingPoint: typeEraseAmbiguousFloatingPoint)
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: Data) throws -> any PrefsStorageValue {
         value
     }
-    
+
     public func importValue(forKeyPath keyPath: [String], value: Date) throws -> any PrefsStorageValue {
         value
     }
@@ -69,23 +69,23 @@ extension PrefsStorageImportStrategy where Self: PrefsStorageMappingImportStrate
         // start recursive call at root
         try prepareForImport(keyPath: [], dict: storage)
     }
-    
+
     func prepareForImport(keyPath: [String], dict: [String: Any]) throws -> [String: Any] {
         var copy = dict
-        
+
         for (key, value) in copy {
             var keyPath = keyPath
             keyPath.append(key)
             copy[key] = try prepareForImport(keyPath: keyPath, element: value)
         }
-        
+
         return copy
     }
-    
+
     func prepareForImport(keyPath: [String], array: [Any]) throws -> Any {
         try array.map { try prepareForImport(keyPath: keyPath, element: $0) }
     }
-    
+
     func prepareForImport(keyPath: [String], element: Any) throws -> Any {
         switch element {
         case let v as String:

@@ -1,7 +1,7 @@
 //
 //  SectionFooterView.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
@@ -13,7 +13,7 @@ public struct SectionFooterView<Content: View>: View {
     public let innerAlignment: HorizontalAlignment
     public let textAlignment: TextAlignment
     public let content: () -> Content
-    
+
     public init(
         alignment: Alignment = .leading,
         innerAlignment: HorizontalAlignment = .leading,
@@ -25,7 +25,7 @@ public struct SectionFooterView<Content: View>: View {
         self.textAlignment = textAlignment
         self.content = content
     }
-    
+
     public var body: some View {
         ZStack(alignment: alignment) {
             Color.clear

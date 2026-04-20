@@ -1,7 +1,7 @@
 //
 //  PrefsSchemaMacroError.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,7 +10,7 @@ extension PrefsSchemaMacro {
     public enum PrefsSchemaMacroError: LocalizedError {
         case incorrectSyntax
         case mainActorNotSupported
-        
+
         public var errorDescription: String? {
             switch self {
             case .incorrectSyntax:
@@ -23,5 +23,7 @@ extension PrefsSchemaMacro {
 }
 
 extension PrefsSchemaMacro.PrefsSchemaMacroError: CustomStringConvertible {
-    public var description: String { errorDescription ?? localizedDescription }
+    public var description: String {
+        errorDescription ?? localizedDescription
+    }
 }

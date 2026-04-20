@@ -1,18 +1,18 @@
 //
 //  PrefsStorageWrapper.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 /// Prefs schema storage.
 @propertyWrapper
-public struct PrefsStorageWrapper<S> where S: PrefsStorage {
+public struct PrefsStorageWrapper<S: PrefsStorage> {
     public var wrappedValue: S
-    
+
     public init(wrappedValue: S) {
         self.wrappedValue = wrappedValue
     }
-    
+
     public init(_ storage: S) {
         wrappedValue = storage
     }

@@ -1,7 +1,7 @@
 //
 //  BoolStringPrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,26 +9,26 @@ import Foundation
 /// Coding strategy for `Bool` using `String` as the encoded storage value (`true`/`false` or `yes`/`no`).
 public struct BoolStringPrefsCoding: PrefsCodable {
     public let encodingStrategy: EncodingStrategy
-    
+
     public init(encodingStrategy: EncodingStrategy) {
         self.encodingStrategy = encodingStrategy
     }
-    
+
     public func encode(prefsValue: Bool) -> String? {
         switch encodingStrategy {
         case let .trueFalse(textCase):
             let text = prefsValue ? "true" : "false"
             return textCase.process(text)
-            
+
         case let .yesNo(textCase):
             let text = prefsValue ? "yes" : "no"
             return textCase.process(text)
-            
+
         case let .custom(true: trueValue, false: falseValue, caseInsensitive: _):
             return prefsValue ? trueValue : falseValue
         }
     }
-    
+
     public func decode(prefsValue: String) -> Bool? {
         switch encodingStrategy {
         case .trueFalse, .yesNo:
@@ -62,10 +62,10 @@ extension BoolStringPrefsCoding {
     public enum EncodingStrategy: Equatable, Hashable, Sendable {
         /// True or False.
         case trueFalse(_ textCase: TextCase = .lowercase)
-        
+
         /// Yes or No.
         case yesNo(_ textCase: TextCase = .lowercase)
-        
+
         /// Custom string values for `true` and `false` states.
         case custom(true: String, false: String, caseInsensitive: Bool = true)
     }
@@ -75,13 +75,13 @@ extension BoolStringPrefsCoding.EncodingStrategy {
     public enum TextCase: Equatable, Hashable, Sendable {
         /// Capitalized text.
         case capitalized
-        
+
         /// Lowercase text.
         case lowercase
-        
+
         /// Uppercase text.
         case uppercase
-        
+
         /// Process an input string based on the enumeration case.
         public func process(_ string: String) -> String {
             switch self {

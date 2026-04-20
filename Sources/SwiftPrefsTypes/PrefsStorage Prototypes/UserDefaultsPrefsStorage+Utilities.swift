@@ -1,7 +1,7 @@
 //
 //  UserDefaultsPrefsStorage+Utilities.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,9 +12,10 @@ extension UserDefaults {
         // Note that underlying number format of NSNumber can't easily be determined
         // so the cleanest solution is to make NSNumber `PrefsStorageValue` and allow
         // the user to conditionally cast it as the number type they desire.
-        
+
         switch value {
         // MARK: Atomic
+
         case let value as NSString:
             return value as String
         case let value as Bool where "\(type(of: value))" == "__NSCFBoolean":
@@ -25,6 +26,7 @@ extension UserDefaults {
             return value as Data
         case let value as NSDate:
             return value as Date
+
         // MARK: Arrays
         case let value as [NSString]:
             return value as [String]
@@ -38,6 +40,7 @@ extension UserDefaults {
             return value as [Date]
         case let value as [Any]:
             return value.map(castAsPrefsStorageCompatible(value:))
+
         // MARK: Dictionaries
         case let value as [NSString: NSString]:
             return value as [String: String]
@@ -51,6 +54,7 @@ extension UserDefaults {
             return value as [String: Date]
         case let value as [String: Any]:
             return value.mapValues(castAsPrefsStorageCompatible(value:))
+
         // MARK: Default
         default:
             assertionFailure("Unhandled UserDefaults pref storage value type: \(type(of: value))")

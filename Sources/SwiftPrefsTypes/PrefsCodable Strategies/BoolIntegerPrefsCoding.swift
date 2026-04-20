@@ -1,7 +1,7 @@
 //
 //  BoolIntegerPrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,15 +9,15 @@ import Foundation
 /// Coding strategy for `Bool` using `Int` as the encoded storage value (`1` or `0`).
 public struct BoolIntegerPrefsCoding: PrefsCodable {
     public let decodingStrategy: DecodingStrategy
-    
+
     public init(decodingStrategy: DecodingStrategy) {
         self.decodingStrategy = decodingStrategy
     }
-    
+
     public func encode(prefsValue: Bool) -> Int? {
         prefsValue ? 1 : 0
     }
-    
+
     public func decode(prefsValue: Int) -> Bool? {
         switch decodingStrategy {
         case .strict:
@@ -39,7 +39,7 @@ extension BoolIntegerPrefsCoding {
         /// Only `1` will be interpreted as `true` and `0` as `false`.
         /// Any other value will return `nil`.
         case strict
-        
+
         /// Use the value nearest to `0` or `1` when reading a stored integer.
         /// `1` or greater will be interpreted as `true`.
         /// `0` or less will be interpreted as `false`.

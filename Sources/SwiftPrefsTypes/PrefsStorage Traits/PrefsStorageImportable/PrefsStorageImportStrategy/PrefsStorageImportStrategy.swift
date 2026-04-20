@@ -1,7 +1,7 @@
 //
 //  PrefsStorageImportStrategy.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 /// Import strategy used by prefs import formats.

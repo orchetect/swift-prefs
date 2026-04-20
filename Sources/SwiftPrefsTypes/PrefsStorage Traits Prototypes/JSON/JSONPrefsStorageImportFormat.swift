@@ -1,7 +1,7 @@
 //
 //  JSONPrefsStorageImportFormat.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,9 +12,9 @@ import Foundation
 /// supply your own import strategy.
 public struct JSONPrefsStorageImportFormat: PrefsStorageImportFormat {
     public var options: JSONSerialization.ReadingOptions
-    
+
     public var strategy: any PrefsStorageImportStrategy
-    
+
     public init(
         options: JSONSerialization.ReadingOptions = [],
         strategy: any PrefsStorageImportStrategy

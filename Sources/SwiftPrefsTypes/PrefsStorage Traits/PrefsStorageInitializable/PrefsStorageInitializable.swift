@@ -1,7 +1,7 @@
 //
 //  PrefsStorageInitializable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,21 +9,21 @@ import Foundation
 /// Trait for ``PrefsStorage`` that enables initializing storage contents.
 public protocol PrefsStorageInitializable where Self: PrefsStorageImportable {
     /// Initialize with storage contents by importing a file on disk.
-    init<Format: PrefsStorageImportFormat>(
+    init(
         from url: URL,
-        format: Format
-    ) throws where Format: PrefsStorageImportFormatFileImportable
-    
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatFileImportable
+    ) throws
+
     /// Initialize with storage contents by importing raw file contents.
-    init<Format: PrefsStorageImportFormat>(
+    init(
         from data: Data,
-        format: Format
-    ) throws where Format: PrefsStorageImportFormatDataImportable
-    
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatDataImportable
+    ) throws
+
     /// Initialize with storage contents by importing raw file contents for a format that supports string
     /// encoding/markup.
-    init<Format: PrefsStorageImportFormat>(
+    init(
         from string: String,
-        format: Format
-    ) throws where Format: PrefsStorageImportFormatStringImportable
+        format: some PrefsStorageImportFormat & PrefsStorageImportFormatStringImportable
+    ) throws
 }

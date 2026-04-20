@@ -1,7 +1,7 @@
 //
 //  PrefsStorageExportable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,43 +12,43 @@ public protocol PrefsStorageExportable where Self: PrefsStorage {
     /// This method is a required implementation detail for storage export methods provided by
     /// ``PrefsStorageExportable`` and is not meant to be used directly.
     func dictionaryRepresentation() throws -> [String: Any]
-    
+
     /// Export the storage contents to a file on disk.
-    func export<Format: PrefsStorageExportFormat>(
-        format: Format,
+    func export(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatFileExportable,
         to file: URL
-    ) throws where Format: PrefsStorageExportFormatFileExportable
-    
+    ) throws
+
     /// Export the storage contents as raw data.
-    func exportData<Format: PrefsStorageExportFormat>(
-        format: Format
-    ) throws -> Data where Format: PrefsStorageExportFormatDataExportable
-    
+    func exportData(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatDataExportable
+    ) throws -> Data
+
     /// Export the storage contents encoded in a format that supports string encoding/markup.
-    func exportString<Format: PrefsStorageExportFormat>(
-        format: Format
-    ) throws -> String where Format: PrefsStorageExportFormatStringExportable
+    func exportString(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatStringExportable
+    ) throws -> String
 }
 
 // MARK: - Default Implementation
 
 extension PrefsStorage where Self: PrefsStorageExportable {
-    public func export<Format: PrefsStorageExportFormat>(
-        format: Format,
+    public func export(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatFileExportable,
         to file: URL
-    ) throws where Format: PrefsStorageExportFormatFileExportable {
+    ) throws {
         try format.export(storage: dictionaryRepresentation(), to: file)
     }
-    
-    public func exportData<Format: PrefsStorageExportFormat>(
-        format: Format
-    ) throws -> Data where Format: PrefsStorageExportFormatDataExportable {
+
+    public func exportData(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatDataExportable
+    ) throws -> Data {
         try format.exportData(storage: dictionaryRepresentation())
     }
-    
-    public func exportString<Format: PrefsStorageExportFormat>(
-        format: Format
-    ) throws -> String where Format: PrefsStorageExportFormatStringExportable {
+
+    public func exportString(
+        format: some PrefsStorageExportFormat & PrefsStorageExportFormatStringExportable
+    ) throws -> String {
         try format.exportString(storage: dictionaryRepresentation())
     }
 }

@@ -1,7 +1,7 @@
 //
 //  AnyPrefsStorage+PrefsStorageImportable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -17,7 +17,7 @@ extension AnyPrefsStorage: PrefsStorageImportable {
         }
         return try wrapped.load(from: contents, by: behavior)
     }
-    
+
     @discardableResult
     public func load(
         unsafe contents: [String: Any],

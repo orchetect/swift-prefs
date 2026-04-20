@@ -1,7 +1,7 @@
 //
 //  PrefMacro.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -25,19 +25,20 @@ extension PrefMacro /* : AccessorMacro */ {
         else {
             throw PrefMacroError.incorrectSyntax
         }
-        
+
         guard varDec.bindingSpecifier.tokenKind == .keyword(.var) else {
             throw PrefMacroError.notVarDeclaration
         }
-        
+
         let varName = try PrefMacroUtils.varName(from: varDec)
         let privateKeyVarName = "\(PrefMacroUtils.privateCodingVarPrefix)\(varName)"
         let privateValueVarName = "\(PrefMacroUtils.privateValueVarPrefix)\(varName)"
-        
+
         let keyPath = #"\."# + varName.description
-        
+
         let hasDefault = (try? PrefMacroUtils.defaultValue(from: varDec)) != nil
-        
+
+        // swiftformat:disable all
         return [
             """
             get {
@@ -85,6 +86,7 @@ extension PrefMacro /* : AccessorMacro */ {
             }
             """
         ]
+        // swiftformat:enable all
     }
 }
 
@@ -98,15 +100,15 @@ extension PrefMacro /* : PeerMacro */ {
         else {
             throw PrefMacroError.incorrectSyntax
         }
-        
+
         let varName = try PrefMacroUtils.varName(from: varDec).description
         let privateKeyVarName = "\(PrefMacroUtils.privateCodingVarPrefix)\(varName)"
         let privateValueVarName = "\(PrefMacroUtils.privateValueVarPrefix)\(varName)"
-        
+
         let (keyArg, codingArg, encodeArg, decodeArg) = try PrefMacroUtils.args(from: node)
         // use variable name as the key name if key was not supplied
         let keyName = keyArg?.expression.description ?? "\"\(varName)\""
-        
+
         var customCodingDecl: String?
         if hasCustomCoding {
             guard let codingArg else {
@@ -119,7 +121,7 @@ extension PrefMacro /* : PeerMacro */ {
             }
             customCodingDecl = "\(PrefMacroUtils.moduleNamePrefix)PrefsCoding(encode: \(encodeArg.expression.description), decode: \(decodeArg.expression.description))"
         }
-        
+
         let typeInfo = try TypeBindingInfo(
             for: Self.self,
             from: varDec,
@@ -128,7 +130,7 @@ extension PrefMacro /* : PeerMacro */ {
             privateValueVarName: privateValueVarName,
             customCodingDecl: customCodingDecl
         )
-        
+
         return [
             """
             \(raw: typeInfo.privateKeyVarDeclaration)

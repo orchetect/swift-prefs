@@ -1,7 +1,7 @@
 //
 //  UserDefaultsPrefsStorage+PrefsStorageImportable.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -24,7 +24,7 @@ extension UserDefaultsPrefsStorage: PrefsStorageImportable {
             return try load(contents: contents, updatingWithPredicate: predicate)
         }
     }
-    
+
     @discardableResult
     public func load(
         unsafe contents: [String: Any],
@@ -52,7 +52,7 @@ extension UserDefaultsPrefsStorage {
         updatingWithPredicate predicate: PrefsStorageUpdateStrategy.UpdatePredicate
     ) throws -> Set<String> {
         var updatedKeys: Set<String> = []
-        
+
         for (key, newValue) in contents {
             if let existingValue = suite.object(forKey: key) {
                 let result = try predicate(key, existingValue, newValue)

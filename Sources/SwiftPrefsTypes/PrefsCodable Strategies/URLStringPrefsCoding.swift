@@ -1,7 +1,7 @@
 //
 //  URLStringPrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,7 +14,7 @@ import Foundation
 /// > `@JSONDataCodablePref` or `@JSONStringCodablePref`.
 public struct URLStringPrefsCoding: PrefsCodable {
     public init() { }
-    
+
     public func encode(prefsValue: URL) -> String? {
         prefsValue.absoluteString
     }
@@ -33,7 +33,9 @@ extension PrefsCodable where Self == URLStringPrefsCoding {
     /// >
     /// > `URL` has native `Codable` conformance, which means it may also be used directly with
     /// > `@JSONDataCodablePref` or `@JSONStringCodablePref`.
-    public static var urlString: URLStringPrefsCoding { .init() }
+    public static var urlString: URLStringPrefsCoding {
+        .init()
+    }
 }
 
 // MARK: - Chaining Constructor

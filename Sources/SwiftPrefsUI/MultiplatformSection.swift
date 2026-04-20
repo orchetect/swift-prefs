@@ -1,7 +1,7 @@
 //
 //  MultiplatformSection.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
@@ -15,7 +15,7 @@ public struct MultiplatformSection<Content: View, Footer: View>: View {
     public let header: LocalizedStringKey?
     public let content: () -> Content
     public let footer: () -> Footer
-    
+
     public init(
         _ header: LocalizedStringKey? = nil,
         @ViewBuilder content: @escaping () -> Content,
@@ -25,7 +25,7 @@ public struct MultiplatformSection<Content: View, Footer: View>: View {
         self.content = content
         self.footer = footer
     }
-    
+
     public var body: some View {
         #if os(macOS)
         Section {
@@ -39,8 +39,6 @@ public struct MultiplatformSection<Content: View, Footer: View>: View {
         } header: {
             if let header {
                 Text(header)
-            } else {
-                EmptyView()
             }
         }
         #else

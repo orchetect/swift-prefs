@@ -1,7 +1,7 @@
 //
 //  JSONDataCodablePrefMacro.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 public struct JSONDataCodablePrefMacro: PrefMacro {

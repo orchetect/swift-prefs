@@ -1,7 +1,7 @@
 //
 //  CompressedDataPrefsCoding.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,11 +14,11 @@ import Foundation
 /// > for use with data that has frequent access or requires low-latency access times.
 public struct CompressedDataPrefsCoding: PrefsCodable {
     let algorithm: NSData.CompressionAlgorithm
-    
+
     public init(algorithm: NSData.CompressionAlgorithm) {
         self.algorithm = algorithm
     }
-    
+
     public func encode(prefsValue: Data) -> Data? {
         try? (prefsValue as NSData)
             .compressed(using: algorithm) as Data

@@ -1,7 +1,7 @@
 //
 //  PrefsSchemaMacro.swift
 //  swift-prefs • https://github.com/orchetect/swift-prefs
-//  © 2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -44,15 +44,15 @@ extension PrefsSchemaMacro: ExtensionMacro {
             .attributes
             .children(viewMode: .fixedUp)
             .map(\.trimmedDescription) // .kind == attribute for all
-        
+
         let isMainActor = attributes.contains("@MainActor")
-        
+
         #if compiler(<6.2)
         guard !isMainActor else {
             throw PrefsSchemaMacroError.mainActorNotSupported
         }
         #endif
-        
+
         let prefsSchemaExtension = try ExtensionDeclSyntax(
             "extension \(type.trimmed): \(raw: isMainActor ? "@MainActor " : "")PrefsSchema { }"
         )
@@ -64,7 +64,7 @@ extension PrefsSchemaMacro: ExtensionMacro {
                 ) {
                     _$observationRegistrar.access(self, keyPath: keyPath)
                 }
-            
+
                 internal nonisolated func withMutation<Member, MutationResult>(
                     keyPath: KeyPath<\(type.trimmed), Member>,
                     _ mutation: () throws -> MutationResult
@@ -74,7 +74,7 @@ extension PrefsSchemaMacro: ExtensionMacro {
             }
             """
         )
-        
+
         return [prefsSchemaExtension, observableExtension]
     }
 }
