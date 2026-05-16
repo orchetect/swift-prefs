@@ -1,10 +1,10 @@
-![swift-prefs](Images/swiftprefs-banner.png)
+![SwiftPrefs](Images/swiftprefs-banner.png)
 
-# swift-prefs
+# SwiftPrefs
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-prefs%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-prefs) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-prefs%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-prefs) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-prefs/blob/main/LICENSE)
 
-A modern Swift library for reading & writing app preferences:
+A modern Swift library for reading & writing app preferences on Apple platforms:
 
 - concise and powerful declarative DSL
 - swappable/mockable storage backend (UserDefaults, Dictionary, PList file, and more)
@@ -30,7 +30,7 @@ A modern Swift library for reading & writing app preferences:
 
 ## Quick Start
 
-1. Add **swift-prefs** as a dependency to your app project or package.
+1. Add **SwiftPrefs** as a dependency to your app project or package.
 
 2. Create a schema that defines the backing storage and preference key/value types.
    - Apply the `@PrefsSchema` attribute to the class.
@@ -733,11 +733,11 @@ Alternatively, if you do not want the class to be bound to `@MainActor`, actors 
 
 > [!NOTE]
 >
-> This may be subject to change in future versions of swift-prefs.
+> This may be subject to change in future versions of SwiftPrefs.
 
 ## FAQ
 
-- **Why use swift-prefs?**
+- **Why use SwiftPrefs?**
 
   Offering users customization points in your software is a foundational way to offer a great user experience — but it's not the main event. You'd rather be putting time and resources into developing the actual features users are customizing than dealing with the overhead of how these options are stored and handled. And so often the problem is handled by way of path of least resistance, which usually goes something like "just use `UserDefaults` and move on" or "`@AppStorage` is good enough, right?"
 
@@ -749,19 +749,19 @@ Alternatively, if you do not want the class to be bound to `@MainActor`, actors 
 
   The 1st-party provided `@AppStorage` property wrapper is convenient and perfectly fine for small apps that do not require robust storage flexibility or prefs isolation / mocking for integration testing or unit testing.
 
-  It also is fairly limited in the value types it supports. swift-prefs offers an easy to use, extensible blueprint for defining and using encoding strategies for any value type.
+  It also is fairly limited in the value types it supports. SwiftPrefs offers an easy to use, extensible blueprint for defining and using encoding strategies for any value type.
 
 - **Why not just use SwiftData?**
 
   SwiftData is more oriented towards data models and user document content. It requires some adaptation and boilerplate to shoehorn it into the role of application preferences storage. It also has a somewhat steep learning curve and may contain more features than are necessary.
 
-  swift-prefs is purpose-built for preference storage.
+  SwiftPrefs is purpose-built for preference storage.
 
 - **Why not just use `UserDefaults` directly?**
 
   For small apps this approach may be adequate. However it forms tight coupling to `UserDefaults` as a storage backend. This means automated integration testing can't as easily be performed with isolated/mocked preferences. Even if the approach of using separate `UserDefaults` suites for testing is employed, the coupling makes changing storage backend in the future more time-intensive.
 
-  swift-prefs adds the ability to swap out the storage backend at any time in the future, in addition to its easy to use, extensible blueprints for defining and using encoding strategies for value types.
+  SwiftPrefs adds the ability to swap out the storage backend at any time in the future, in addition to its easy to use, extensible blueprints for defining and using encoding strategies for value types.
 
 ## Installation
 
