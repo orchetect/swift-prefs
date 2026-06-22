@@ -796,7 +796,7 @@ Coded by a bunch of 🐹 hamsters in a trench coat that calls itself [@orchetect
 
 ## License
 
-Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift-prefs/blob/master/LICENSE) for details.
+Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/swift-prefs/blob/main/LICENSE) for details.
 
 ## Community & Support
 
